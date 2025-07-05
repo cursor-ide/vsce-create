@@ -5,7 +5,7 @@
 [![JSR Scope](https://jsr.io/badges/@vsce)](https://jsr.io/@vsce)
 [![JSR](https://jsr.io/badges/@vsce/create)](https://jsr.io/@vsce/create)
 [![JSR Score](https://jsr.io/badges/@vsce/create/score)](https://jsr.io/@vsce/create/score)
-[![GitHub CI](https://img.shields.io/github/actions/workflow/status/cursor-ide/vsce-create/update.yml?branch=main&label=sync)](https://github.com/cursor-ide/vsce-create/actions/workflows/create.yml)
+[![GitHub CI](https://img.shields.io/github/actions/workflow/status/cursor-ide/vsce-create/create.yml?branch=main&label=sync)](https://github.com/cursor-ide/vsce-create/actions/workflows/create.yml)
 [![Last Updated](https://img.shields.io/github/last-commit/cursor-ide/vsce-create?label=last%20synced)](https://github.com/cursor-ide/vsce-create/commits/main)
 [![License](https://img.shields.io/github/license/cursor-ide/vsce-create)](./LICENSE)
 
