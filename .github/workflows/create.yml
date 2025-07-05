@@ -1,0 +1,76 @@
+name: Build and Test @vsce/create
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**'
+      - '.github/workflows/create.yml'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed for committing fmt changes
+      id-token: write # Needed for JSR publishing
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Regenerate lockfile if needed
+        run: |
+          if ! deno cache --check mod.ts 2>/dev/null; then
+            echo "Regenerating lockfile due to version mismatch"
+            rm -f deno.lock
+            deno cache mod.ts
+          fi
+
+      - name: Type check
+        run: deno task check
+
+      - name: Lint code
+        run: deno task lint
+
+      - name: Format code
+        run: deno task fmt
+
+      - name: Commit formatting changes if any
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: auto-format code"
+          fi
+
+      - name: Run tests
+        run: deno task test
+
+      - name: Validate JSR package
+        run: deno task publish-dry
+
+      - name: Commit changes if any
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            VERSION=$(jq -r .version jsr.json)
+            git commit -m "chore: sync create → v$VERSION"
+            git push origin HEAD
+          else
+            echo "No changes to commit."
+          fi
+
+      - name: Publish to JSR
+        if: success() && github.ref == 'refs/heads/main'
+        run: npx jsr publish
