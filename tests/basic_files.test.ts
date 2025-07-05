@@ -1,5 +1,5 @@
 import { join } from '@std/path';
-import { bundleExtension } from '../../vsce-bundler/mod.ts';
+import { bundleExtension } from 'jsr:@vsce/bundler@^1.0.0';
 import { assert } from '@std/assert';
 import { scaffoldProject } from '../mod.ts';
 

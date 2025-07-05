@@ -18,7 +18,8 @@
     "@std/fs": "jsr:@std/fs@^1.0.0",
     "@std/cli": "jsr:@std/cli@^1.0.0",
     "@std/fmt/colors": "jsr:@std/fmt@^1.0.0/colors",
-    "@typed/vscode": "jsr:@typed/vscode@^1.101.0"
+    "@typed/vscode": "jsr:@typed/vscode@^1.101.0",
+    "@vsce/bundler": "jsr:@vsce/bundler@^1.0.0"
   },
   "fmt": {
     "useTabs": true,
